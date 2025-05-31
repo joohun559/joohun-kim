@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at center, #ffffff 0%, #606060 60%, #141414 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 10px 6px rgba(0, 0, 0, 0.3));
+}
+
+img {
+  max-width: 40vw;
+  max-height: 40vh;
+  object-fit: contain;
+  display: block;
+}
+
+.blink-light {
+  position: absolute;
+  top: 75.5%;
+  left: 83%;
+  width: 6px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #0f0;
+  box-shadow: 0 0 8px 2px #0f0;
+  animation: blink 1.2s infinite ease-in-out;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  cursor: pointer;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+#crt-button {
+  position: absolute;
+  top: 13%;
+  left: 20%;
+  width: 60%;
+  height: 45%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.3;
+  z-index: 20;
+}
+
+.crt-box {
+  position: absolute;
+  top: 13%;
+  left: 20%;
+  width: 60%;
+  height: 45%;
+  pointer-events: none;
+  z-index: 10;
+  background: none;
+}
+
+/* CRT 활성화 스캔라인 효과 */
+.crt-active {
+  display: block;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 0, 0.05),
+    rgba(0, 255, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  animation: flicker 0.1s infinite;
+  backdrop-filter: contrast(1.5) brightness(1.2);
+}
+
+@keyframes flicker {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.9; }
+}
+
+/* 화면 꺼짐 애니메이션 */
+.crt-box.power-off::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: black;
+  transform: translate(-50%, -50%);
+  animation: powerOffAnim 1s forwards;
+  z-index: 999;
+}
+
+@keyframes powerOffAnim {
+  0% { width: 100%; height: 100%; opacity: 1; }
+  50% { height: 4px; }
+  100% { width: 100%; height: 100%; background: black; }
+}
+
+/* 화면 켜짐 애니메이션 */
+.crt-box.power-on::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 4px;
+  background: black;
+  transform: translate(-50%, -50%);
+  animation: powerOnAnim 1s forwards;
+  z-index: 999;
+}
+
+@keyframes powerOnAnim {
+  0% { width: 100%; height: 4px; }
+  100% { width: 100%; height: 100%; background: transparent; opacity: 0; }
+}
+
+.blink-light.green {
+  background-color: #0f0;
+  box-shadow: 0 0 8px 2px #0f0;
+}
+
+.blink-light.red {
+  background-color: #f00;
+  box-shadow: 0 0 8px 2px #f00;
+}
